@@ -1,0 +1,19 @@
+kind: GitRepo
+apiVersion: fleet.cattle.io/v1alpha1
+metadata:
+  name: essentials
+  namespace: fleet-default
+spec:
+  repo: https://github.com/bcdurden/vsphere_builder_fleet.git
+  branch: main
+
+  targets:
+  - clusterSelector:
+      matchLabels:
+        environment: vsphere
+  - clusterSelector:
+      matchLabels:
+        environment: prod
+
+  paths:
+  - "./gitops/apps/essentials"

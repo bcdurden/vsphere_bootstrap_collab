@@ -1,0 +1,24 @@
+kind: GitRepo
+apiVersion: fleet.cattle.io/v1alpha1
+metadata:
+  name: security-controls
+  namespace: fleet-default
+spec:
+  repo: https://github.com/bcdurden/vsphere_builder_fleet.git
+  branch: main
+
+  # To target specific clusters, uncomment this block
+  targets:
+  - clusterSelector:
+      matchLabels:
+        environment: vsphere
+  - clusterSelector:
+      matchLabels:
+        environment: prod
+
+  paths:
+  - "./gitops/apps/security_controls/kubewarden/crds"
+  - "./gitops/apps/security_controls/kubewarden/controller"
+  - "./gitops/apps/security_controls/kubewarden/defaults"
+  - "./gitops/apps/security_controls/neuvector_crd"
+  - "./gitops/apps/security_controls/neuvector"

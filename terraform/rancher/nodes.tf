@@ -1,0 +1,33 @@
+module "rke2-hardened" {
+  source  = "bcdurden/rke2-hardened/vsphere"
+  version = "0.0.11"
+  vsphere_user = var.vsphere_user
+  vsphere_password = var.vsphere_password
+  vsphere_server = var.vsphere_server
+  skip_ssl_verify = var.skip_ssl_verify
+  datacenter_name = var.datacenter_name
+  datastore_name = var.datastore_name
+  cluster_name = var.cluster_name
+  network_name = var.network_name
+  ha_mode = var.ha_mode
+  cp_cpu_count = var.cp_cpu_count
+  cp_memory_size_mb = var.cp_memory_size_mb
+  cp_disk_size_gb = var.cp_disk_size_gb
+  worker_cpu_count = var.worker_cpu_count
+  worker_memory_size_mb = var.worker_memory_size_mb
+  worker_disk_size_gb = var.worker_disk_size_gb
+  esxi_hosts = var.esxi_hosts
+  node_prefix = var.node_prefix
+  cluster_token = var.cluster_token
+  rke2_version = var.rke2_version
+  worker_count = var.worker_count
+  rke2_vip = var.rke2_vip
+  rke2_vip_interface = var.rke2_vip_interface
+  rke2_image_name = var.rke2_image_name
+  content_library_name = var.content_library_name
+  vm_folder = "ranchermcm"
+
+  rke2_registry = var.rke2_registry
+  carbide_username = var.carbide_username
+  carbide_password = var.carbide_password
+}
