@@ -1,0 +1,4 @@
+*.tfstate*
+.terraform*
+kube_config.yaml
+id_rsa*
