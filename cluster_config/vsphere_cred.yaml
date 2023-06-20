@@ -1,0 +1,13 @@
+apiVersion: v1
+stringData:
+  vmwarevspherecredentialConfig-password: 
+  vmwarevspherecredentialConfig-username: 
+  vmwarevspherecredentialConfig-vcenter: 
+  vmwarevspherecredentialConfig-vcenterPort: "443"
+kind: Secret
+metadata:
+  labels:
+    cattle.io/creator: norman
+  name: vsphere
+  namespace: cattle-global-data
+type: Opaque

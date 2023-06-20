@@ -1,0 +1,15 @@
+apiVersion: v1
+stringData:
+  amazonec2credentialConfig-accessKey: 
+  amazonec2credentialConfig-defaultRegion: 
+  amazonec2credentialConfig-secretKey: 
+kind: Secret
+metadata:
+  annotations:
+    field.cattle.io/name: aws
+    provisioning.cattle.io/driver: aws
+  labels:
+    cattle.io/creator: norman
+  name: aws-multicloud
+  namespace: cattle-global-data
+type: Opaque

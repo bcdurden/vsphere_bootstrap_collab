@@ -1,0 +1,10 @@
+#@ load("@ytt:overlay", "overlay")
+#@ load("@ytt:data", "data")
+
+#@overlay/match by=overlay.subset({"metadata":{"name":"aws-multicloud"}}), expects="0+"
+---
+stringData:
+  amazonec2credentialConfig-accessKey: #@ data.values.aws_access_key
+  amazonec2credentialConfig-defaultRegion: #@ data.values.aws_region
+  amazonec2credentialConfig-secretKey: #@ data.values.aws_secret_key
+  

@@ -1,0 +1,9 @@
+#@data/values
+#! these values are designed to stay empty and satisfy ytt upstream reqs
+---
+vsphere_username:
+vsphere_password:
+vsphere_url:
+aws_access_key:
+aws_region:
+aws_secret_key:
