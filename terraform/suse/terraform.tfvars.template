@@ -1,0 +1,11 @@
+vsphere_user =
+vsphere_password =
+vsphere_server = 
+datacenter_name = 
+cluster_name =
+datastore_name =
+content_library_name =
+network_name =
+vm_image_name =
+esxi_hosts = []
+vm_folder = ""
