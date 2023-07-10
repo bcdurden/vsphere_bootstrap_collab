@@ -38,6 +38,7 @@ TS_TOKEN_FILE=/Volumes/my_volume/keys/tailscale_token.yaml
 TS_KEY := $(shell yq e .tailscale_token ${TS_TOKEN_FILE})
 
 # RKE2 / Local cluster details
+RKE2_VERSION=v1.24.14+rke2r1
 RKE2_CP_CPU_COUNT=4
 RKE2_CP_MEMORY_SIZE_MB=8192
 RKE2_WORKER_CPU_COUNT=4
@@ -64,7 +65,7 @@ rancher: check-tools
 	$(call colorecho,"Deploying Rancher to "$(VSPHERE_URL), 6)
 	@kubecm delete $(LOCAL_CLUSTER_NAME) || true
 	$(call colorecho,"====> Terraforming RKE2 + Rancher", 5)
-	@$(MAKE) _terraform COMPONENT=rancher OPTS="-var 'esxi_hosts=$(VSPHERE_ESXI_HOSTS)'" VARS="TF_VAR_vsphere_user=$(VSPHERE_USERNAME) TF_VAR_vsphere_password=$(VSPHERE_PASSWORD) TF_VAR_vsphere_server=$(VSPHERE_URL) TF_VAR_datacenter_name=$(VSPHERE_DC_NAME) TF_VAR_cluster_name=$(VSPHERE_CLUSTER_NAME) TF_VAR_datastore_name=$(VSPHERE_DS_NAME) TF_VAR_network_name="$(VSPHERE_NETWORK_NAME)" TF_VAR_cp_cpu_count=$(RKE2_CP_CPU_COUNT) TF_VAR_cp_memory_size_mb=$(RKE2_CP_MEMORY_SIZE_MB) TF_VAR_worker_count=$(RKE2_WORKER_COUNT) TF_VAR_worker_cpu_count=$(RKE2_WORKER_CPU_COUNT) TF_VAR_worker_memory_size_mb=$(RKE2_WORKER_MEMORY_SIZE_MB) TF_VAR_node_prefix=rke2-ranchermcm TF_VAR_content_library_name=$(CONTENT_LIBRARY_NAME) TF_VAR_rke2_vip=$(RKE2_VIP) TF_VAR_rke2_vip_interface=$(RKE2_VIP_INTERFACE) TF_VAR_rke2_image_name=$(RKE2_IMAGE_NAME) TF_VAR_carbide_username='$(CARBIDE_USER)' TF_VAR_carbide_password='$(CARBIDE_PASSWORD)' TF_VAR_registry_url='$(CARBIDE_REGISTRY)'"
+	@$(MAKE) _terraform COMPONENT=rancher OPTS="-var 'esxi_hosts=$(VSPHERE_ESXI_HOSTS)'" VARS="TF_VAR_vsphere_user=$(VSPHERE_USERNAME) TF_VAR_vsphere_password=$(VSPHERE_PASSWORD) TF_VAR_vsphere_server=$(VSPHERE_URL) TF_VAR_datacenter_name=$(VSPHERE_DC_NAME) TF_VAR_cluster_name=$(VSPHERE_CLUSTER_NAME) TF_VAR_datastore_name=$(VSPHERE_DS_NAME) TF_VAR_network_name="$(VSPHERE_NETWORK_NAME)" TF_VAR_rke2_version=$(RKE2_VERSION) TF_VAR_cp_cpu_count=$(RKE2_CP_CPU_COUNT) TF_VAR_cp_memory_size_mb=$(RKE2_CP_MEMORY_SIZE_MB) TF_VAR_worker_count=$(RKE2_WORKER_COUNT) TF_VAR_worker_cpu_count=$(RKE2_WORKER_CPU_COUNT) TF_VAR_worker_memory_size_mb=$(RKE2_WORKER_MEMORY_SIZE_MB) TF_VAR_node_prefix=rke2-ranchermcm TF_VAR_content_library_name=$(CONTENT_LIBRARY_NAME) TF_VAR_rke2_vip=$(RKE2_VIP) TF_VAR_rke2_vip_interface=$(RKE2_VIP_INTERFACE) TF_VAR_rke2_image_name=$(RKE2_IMAGE_NAME) TF_VAR_carbide_username='$(CARBIDE_USER)' TF_VAR_carbide_password='$(CARBIDE_PASSWORD)' TF_VAR_registry_url='$(CARBIDE_REGISTRY)'"
 	@cp ${TERRAFORM_DIR}/rancher/kube_config.yaml /tmp/$(LOCAL_CLUSTER_NAME).yaml && kubecm add -c -f /tmp/$(LOCAL_CLUSTER_NAME).yaml && rm /tmp/$(LOCAL_CLUSTER_NAME).yaml
 	@kubectx $(LOCAL_CLUSTER_NAME)
 	@helm upgrade --install cert-manager -n cert-manager --create-namespace --set installCRDs=true --set image.repository=$(CARBIDE_REGISTRY)/jetstack/cert-manager-controller --set webhook.image.repository=$(CARBIDE_REGISTRY)/jetstack/cert-manager-webhook --set cainjector.image.repository=$(CARBIDE_REGISTRY)/jetstack/cert-manager-cainjector --set startupapicheck.image.repository=$(CARBIDE_REGISTRY)/jetstack/cert-manager-ctl --set securityContext.runAsNonRoot=true https://charts.jetstack.io/charts/cert-manager-v$(CERT_MANAGER_VERSION).tgz

@@ -39,7 +39,18 @@ resource "vsphere_virtual_machine" "jumpbox" {
       EOT
       )  
       "guestinfo.userdata.encoding" = "base64"
-      "guestinfo.metadata"          = ""
+      "guestinfo.metadata"          = base64encode( <<EOT
+        network:
+          version: 2
+          ethernets:
+            eth0:
+              addresses:
+                - 10.1.1.4/24
+              gateway4: 10.1.1.1
+              nameservers:
+                addresses: [8.8.8.8]
+      EOT
+      )
       "guestinfo.metadata.encoding" = "base64"
     }
 }

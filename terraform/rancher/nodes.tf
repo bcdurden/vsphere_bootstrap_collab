@@ -30,4 +30,5 @@ module "rke2-hardened" {
   rke2_registry = var.rke2_registry
   carbide_username = var.carbide_username
   carbide_password = var.carbide_password
+  os_user = var.os_user
 }
